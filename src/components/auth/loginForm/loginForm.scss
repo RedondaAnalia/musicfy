@@ -1,7 +1,8 @@
-@import "../../../scss/index.scss";
+@import "../../../index.scss";
 
-.register-form {
+.login-form {
   margin-top: 50px;
+
   h1 {
     color: $font-light;
     text-align: center;
@@ -9,6 +10,21 @@
     padding-bottom: 20px;
   }
 
+  .resend-verification-email {
+    color: $font-light;
+    padding: 20px 20px 0 20px;
+    text-align: center;
+
+    span {
+      color: $primary-color;
+      font-weight: bold;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  //TODO: esto está repetido en registerForm.... refactor!
   .ui.form {
     .field {
       .input {
@@ -61,6 +77,7 @@
     }
   }
 
+  //TODO: esto está repetido en registerForm.... refactor!
   &__options {
     margin-top: 50px;
     color: $font-light;

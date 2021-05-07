@@ -11,7 +11,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   firebase.auth().onAuthStateChanged(currentUser => {
-    console.log(currentUser);
         if(!currentUser?.emailVerified) {
           firebase.auth().signOut();
           setUser(null);
@@ -32,7 +31,7 @@ function App() {
       {!user ? <Auth /> : <UserLogged/>}
       <ToastContainer 
             position="top-center"
-            autoClose={1000000000000}
+            autoClose={5000}
             hideProgressBar
             newestOnTop
             closeOnClick

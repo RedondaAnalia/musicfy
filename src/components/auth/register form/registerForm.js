@@ -54,12 +54,13 @@ export default function RegisterForm(props) {
             firebase.auth()
                     .createUserWithEmailAndPassword(formData.email, formData.password)
                     .then( () => {
-                        toast.success("Registro completado");
                         changeUserName();
+                        //TODO: configurar mail automático (llega genérico).
                         sendVerificationEmail();
                     })
-                    .catch(()=>{
-                        toast.error("Error al crear la cuenta")
+                    .catch(err=>{
+                        console.log(err);
+                        handlerErrors (err.code, setSelectedForm);
                     })
                     .finally(()=>{
                         setIsLoading(false);
@@ -157,4 +158,15 @@ function defaultValueForm() {
         password: "",
         username:""
 }
+}
+
+function handlerErrors(code, setSelectedForm){
+    switch(code){
+        case "auth/email-already-in-use":
+            toast.warning("Parece que ya tienes una cuenta en Musicfy");
+            setSelectedForm("login");
+            break;
+        default:
+            break;
+    }
 }
