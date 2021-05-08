@@ -7,7 +7,6 @@ import "./basicModal.scss";
 export default function BasicModal(props) {
 
     const { show, setShow, title, children } = props
-    console.log("Contenido de show:" + show)
 
     const onClose= () => {
         setShow(false);

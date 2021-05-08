@@ -1,13 +1,8 @@
 # Proyecto Electron
 
-Para correr el proyecto:
-Instalar globalmente Electron
+Para correr el proyecto en modo desarrollador:
 
-### npm i electron -g
+- Instalar globalmente Electron: `npm i electron -g`
+- En la raíz del proyecto correr: `npm electron-dev`
 
-Y luego en la raiz correr por línea de comandos:
-
-### `npm electron-dev`
-
-Esto abrirá el proyecto en modo desarrollador.
-**Nota: Esta configurado para que solo abra el proyecto en modo escritorio**
+**Nota: Solo abrirá el proyecto en modo escritorio**

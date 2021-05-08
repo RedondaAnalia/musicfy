@@ -3,7 +3,7 @@ import { Menu, Icon } from 'semantic-ui-react';
 import { Link, withRouter } from 'react-router-dom';
 import { isUserAdmin } from "../../utils/api";
 
-import BasicModal from "../../modal/basic modal";
+import BasicModal from "../modal/basic modal";
 
 import './menuLeft.scss';
 
@@ -17,17 +17,16 @@ function MenuLeft(props) {
     const [titleModal, setTitleModal] = useState(null);
     const [contentModal, setContentModal] = useState(null);
 
-    console.log(userAdmin);
+    useEffect(() => {
+        setActiveMenu(location.pathname);
+    }, [location]);
+
 
     useEffect(() => {
                 isUserAdmin(user.uid).then ( res => {
                                             setUserAdmin(res);
      })
-    }, [userAdmin])
-
-    useEffect(( ) => {
-        console.log(location)
-    },[])
+    }, [userAdmin]);
 
     const handlerMenu = (e,menu) => {
         setActiveMenu(menu.to);
