@@ -8,7 +8,7 @@ import Routes from "../../routes/routes";
 import "./loggedLayout.scss";
 
 export default function LoggedLayout(props) {
-    const {user} = props
+    const {user,setReloadApp} = props
 
     return (
     <Router>
@@ -19,7 +19,7 @@ export default function LoggedLayout(props) {
                 </Grid.Column>
                 <Grid.Column className= "content" width={13}>
                     <TopBar user= {user} />
-                    <Routes></Routes>
+                    <Routes user= {user} setReloadApp={setReloadApp}></Routes>
                 </Grid.Column>
             </Grid.Row>
             <Grid.Row>
