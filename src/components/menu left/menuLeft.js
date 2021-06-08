@@ -3,6 +3,7 @@ import { Menu, Icon } from 'semantic-ui-react';
 import { Link, withRouter } from 'react-router-dom';
 import { isUserAdmin } from "../../utils/api";
 import  AddArtistForm  from '../artists/addArtistForm';
+import  AddAlbumForm  from '../albums/addAlbumForm';
 
 import BasicModal from "../modal/basic modal";
 
@@ -40,6 +41,16 @@ function MenuLeft(props) {
                 setContentModal(<AddArtistForm setShowModal={setShowModal}/>);
                 setShowModal(true);
                 break;
+            case "album":
+                setTitleModal("Nuevo Álbum");
+                setContentModal(<AddAlbumForm setShowModal={setShowModal}/>);
+                setShowModal(true);
+                break;
+            case "song":
+                setTitleModal("Nueva Cancion");
+                setContentModal(<h2>Formulario Nueva Cancion</h2>);
+                setShowModal(true);
+                break;
             case "song":
                 setTitleModal("Nueva Cancion");
                 setContentModal(<h2>Formulario Nueva Cancion</h2>);
@@ -73,7 +84,16 @@ function MenuLeft(props) {
                             active={ activeMenu === "/artists"} 
                             onClick={handlerMenu}>
                     
-                    <Icon name="music" /> Artistas
+                    <Icon name="user" /> Artistas
+                </Menu.Item>
+
+                <Menu.Item  as={ Link } 
+                            to="/albums" 
+                            name="albums" 
+                            active={ activeMenu === "/albums"} 
+                            onClick={handlerMenu}>
+                    
+                    <Icon name="window maximize outline" /> Álbums
                 </Menu.Item>
             </div>
 
@@ -81,6 +101,9 @@ function MenuLeft(props) {
                 <div className="footer" >
                     <Menu.Item onClick={()=> handlerModal("artist")}>
                         <Icon name="plus square outline" /> Nuevo Artista
+                    </Menu.Item>
+                    <Menu.Item onClick={()=> handlerModal("album")}>
+                        <Icon name="plus square outline" /> Nuevo Álbum
                     </Menu.Item>
                     <Menu.Item onClick={()=> handlerModal("song")}>
                         <Icon name="plus square outline" /> Nueva Cancion

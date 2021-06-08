@@ -59,7 +59,6 @@ export default function RegisterForm(props) {
                         sendVerificationEmail();
                     })
                     .catch(err=>{
-                        console.log(err);
                         handlerErrors (err.code, setSelectedForm);
                     })
                     .finally(()=>{

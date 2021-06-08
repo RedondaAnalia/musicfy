@@ -12,11 +12,13 @@ const db = firebase.firestore(firebase);
 export default function Home() {
 
     const [artists, setArtists] = useState([]);
+    const [albums, setAlbums] = useState([]);
+
     useEffect(() => {
         db.collection('artists')
           .get()
           .then( res => {
-              const arrayArtists = []
+              const arrayArtists = [];
               map(res?.docs, artist => {
                   const data = artist.data();
                   data.id= artist.id;
@@ -24,6 +26,20 @@ export default function Home() {
               });
               setArtists(arrayArtists);
           })
+    }, [])
+
+    useEffect(() => {
+        db.collection("albums")
+            .get()
+            .then( res => {
+                const arrayAlbums = [];
+                map(res?.docs, album => {
+                    const data = album.data();
+                    data.id = album.id;
+                    arrayAlbums.push(data);
+                });
+                setAlbums(arrayAlbums);
+            })
     }, [])
 
 
@@ -37,6 +53,10 @@ export default function Home() {
                                     data={artists} 
                                     folderImage="artist"
                                     urlName="artist"/>
+                <BasicSliderItems title= "Ultimos álbums" 
+                                    data={albums} 
+                                    folderImage="album"
+                                    urlName="album"/>
                 <h2>Mas...</h2>
             </div>
         </>

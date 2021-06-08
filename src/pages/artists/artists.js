@@ -12,7 +12,6 @@ const db=firebase.firestore(firebase);
 export default function Artists() {
     
     const [artists, setArtists] = useState([]);
-    console.log(artists)
     
     useEffect(() => {
         db.collection("artists")

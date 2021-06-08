@@ -54,14 +54,12 @@ export default function LoginForm(props) {
             firebase.auth()
                     .signInWithEmailAndPassword(formData.email, formData.password)
                     .then( res =>{
-                        console.log(res);
                         setUser(res.user);
                         setUserActive(res.user.emailVerified);
                         if(!res.user.emailVerified){
                             toast.warning (" Ups! Parece que tu email no está verificado. Por favor, revisa tu correo y verifica tu email.")
                         }
                     }).catch(err => {
-                        console.log(err)
                         handlerErrors(err.code)
                     }).finally( ()=> {
                         setIsLoading(false);
@@ -139,7 +137,6 @@ function ButtonResetSendEmailVerification(props){
         user.sendEmailVerification().then (() => {
             toast.success("Se ha enviado el mail de verificacion")
         }).catch(err=> {
-            console.log(err);
             handlerErrors(err.code);
         }).finally( () =>{
             setIsLoading(false);

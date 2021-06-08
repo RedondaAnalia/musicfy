@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { map } from 'lodash';
+import { map, size } from 'lodash';
 import  Slider  from 'react-slick';
 import { Link } from 'react-router-dom';
 import firebase from '../../../utils/firebase';
@@ -22,11 +22,14 @@ export default function BasicSliderItems(props) {
         className: 'basic-slider-items__list'
     }
 
+    if(size(data) < 5){
+        return null
+    }
+
     return (
         <div className="basic-slider-items">
             <h2>{title}</h2>
             <div>
-                <h2> Single Item</h2>
                 <Slider {...settings}>
                     {map (data, artist => (
                         <RenderItem key={artist.id} item={artist} folderImage={folderImage} urlName={urlName}/>
