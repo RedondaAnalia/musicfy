@@ -4,6 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { isUserAdmin } from "../../utils/api";
 import  AddArtistForm  from '../artists/addArtistForm';
 import  AddAlbumForm  from '../albums/addAlbumForm';
+import  AddSongForm  from '../songs/addSongForm';
 
 import BasicModal from "../modal/basic modal";
 
@@ -48,12 +49,7 @@ function MenuLeft(props) {
                 break;
             case "song":
                 setTitleModal("Nueva Cancion");
-                setContentModal(<h2>Formulario Nueva Cancion</h2>);
-                setShowModal(true);
-                break;
-            case "song":
-                setTitleModal("Nueva Cancion");
-                setContentModal(<h2>Formulario Nueva Cancion</h2>);
+                setContentModal(<AddSongForm setShowModal={setShowModal}/>);
                 setShowModal(true);
                 break;
             default:

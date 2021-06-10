@@ -20,13 +20,11 @@ export default function Player(props) {
     }, [songData])
 
     const onStart = () => {
-        setPlaying(true);
-        console.log("Reproduciendo")
+        setPlaying(true); 
     }
 
     const onPause = () => {
         setPlaying(false);
-        console.log("En Pausa")
     }
 
     const onProgress = data =>{

@@ -1,27 +1,33 @@
 import React, {useState, useEffect} from 'react';
-import { Loader } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
+import { map } from 'lodash';
+import ListSongs from '../../components/songs/listSongs';
+import { Loader } from 'semantic-ui-react';
+import './album.scss';
+
 import firebase from '../../utils/firebase';
 import 'firebase/firestore';
 import 'firebase/storage';
-import './album.scss';
-import artists from '../artists';
 
 const db= firebase.firestore(firebase);
 
+
 function Album(props) {
 
-    const { match } = props;
+    const { match, playerSong } = props;
     const [album, setAlbum] = useState(null);
     const [albumImage, setAlbumImage] = useState(null);
     const [artist, setArtist] = useState(null);
+    const [songs, setSongs] = useState([])
 
     useEffect(() => {
         db.collection("albums")
             .doc(match.params.id)
             .get()
             .then( res => {
-                setAlbum(res.data());
+                const data= res.data();
+                data.id= res.id;
+                setAlbum(data);
             })
     }, [match]);
 
@@ -49,6 +55,25 @@ function Album(props) {
         }
     }, [album]);
 
+    useEffect(() => {
+        if(album){
+            db.collection("songs")
+              .where("album", "==", album.id)
+              .get()
+              .then( res => {
+                  const arraySongs=[];
+                  map(res?.docs, song => {
+                      const data= song.data();
+                      data.id= song.id;
+                      arraySongs.push(data);
+                  })
+                  setSongs(arraySongs);
+              })
+
+        }
+        
+    }, [album])
+
     if(!album || !artist){
         return (
             <Loader active>Cargando...</Loader>
@@ -61,7 +86,7 @@ function Album(props) {
               <HeaderAlbum album={album} albumImage={albumImage} artist={artist}/>
           </div>
           <div className="album__songs"> 
-            <p>Lista de Canciones...</p>
+            <ListSongs songs={songs} albumImage={albumImage} playerSong={playerSong}/>
           </div>
       </div>
     )

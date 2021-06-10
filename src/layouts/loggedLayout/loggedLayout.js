@@ -1,23 +1,31 @@
 import React, { useState } from 'react';
 import{ Button, Grid, GridRow } from 'semantic-ui-react';
 import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "../../routes/routes";
+
 import MenuLeft from '../../components/menu left';
 import TopBar from '../../components/top bar';
 import Player from '../../components/player';
 
-import Routes from "../../routes/routes";
+import firebase from '../../utils/firebase';
+import 'firebase/storage';
 import "./loggedLayout.scss";
 
 export default function LoggedLayout(props) {
     const {user,setReloadApp} = props
     const [songData, setSongData] = useState({})
 
-    const playerSong = (albumImage, songName, songUrl) =>{
-        setSongData({
-            image:albumImage,
-            name:songName,
-            url: songUrl
-        })
+    const playerSong = (albumImage, songName, songNameFile) =>{
+        firebase.storage()
+                .ref(`song/${songNameFile}`)
+                .getDownloadURL()
+                .then( songUrl => {
+                    setSongData({
+                        url:songUrl,
+                        image: albumImage,
+                        name: songName
+                    })                    
+                })
     }
 
     const image1 = 'https://firebasestorage.googleapis.com/v0/b/musicfy-55d9a.appspot.com/o/album%2F006ee08c-b617-4e51-9a0d-3d2ecf40fe49?alt=media&token=b30724b0-2575-4205-9561-d8db41f36036';
@@ -30,12 +38,11 @@ export default function LoggedLayout(props) {
         <Grid className="logged-layout">
             <Grid.Row>
                 <Grid.Column width={3}>
-                    <button onClick={()=>playerSong(image1, name1, url1)}>Start</button>
                     <MenuLeft user={user}/>
                 </Grid.Column>
                 <Grid.Column className= "content" width={13}>
                     <TopBar user= {user} />
-                    <Routes user= {user} setReloadApp={setReloadApp}></Routes>
+                    <Routes user= {user} setReloadApp={setReloadApp} playerSong={playerSong}></Routes>
                 </Grid.Column>
             </Grid.Row>
             <Grid.Row>
